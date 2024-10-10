@@ -53,8 +53,8 @@ with uc.Chrome(options=chrome_options) as browser:
 
     while True:
         try:
-            btn_here = WebDriverWait(browser, 7200).until(
-                EC.presence_of_element_located((By.XPATH, here_btn)))
+            btn_here = WebDriverWait(browser, 60).until(
+                EC.visibility_of_element_located((By.XPATH, here_btn)))
             btn_here.click()
             btn_close = WebDriverWait(browser, 60).until(
                 EC.visibility_of_element_located((By.XPATH, close_btn)))
