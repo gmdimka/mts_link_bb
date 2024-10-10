@@ -4,7 +4,7 @@ import undetected_chromedriver as uc
 from dotenv import load_dotenv
 
 
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, WebDriverException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options as ChromeOptions
@@ -17,23 +17,23 @@ load_dotenv()
 MTS_LINK = os.getenv("MTS_LINK")
 
 chrome_options = ChromeOptions()
-# chrome_options.add_argument("--disable-infobars")
 chrome_options.add_argument("--use-fake-ui-for-media-stream")  # Разрешить доступ к микрофону
-# chrome_options.add_argument(r'--user-data-dir=C:\User Data')
-# chrome_options.add_argument('--profile-directory=Default')
 with uc.Chrome(options=chrome_options) as browser:
     browser.get(MTS_LINK)
-    iframe = WebDriverWait(browser, 10).until(
-        EC.presence_of_element_located((By.ID, "eventLandingFrame"))
-    )
-    browser.switch_to.frame(iframe)
     try:
+        iframe = WebDriverWait(browser, 10).until(
+            EC.presence_of_element_located((By.ID, "eventLandingFrame"))
+        )
+        browser.switch_to.frame(iframe)
         btn_warning_first_step = WebDriverWait(browser, 15).until(
             EC.visibility_of_element_located((By.XPATH, warning_first_step)))
         btn_warning_first_step.click()
     except TimeoutException:
         pass
-    browser.switch_to.default_content()
+    try:
+        browser.switch_to.default_content()
+    except WebDriverException:
+        pass
     try:
         btn_entry_as_dmitry = WebDriverWait(browser, 15).until(
             EC.presence_of_element_located((By.XPATH, entry_as_dmitry)))
