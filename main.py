@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support import expected_conditions as EC
 
 from dom_consts import mute_mic_btn, entry_as_dmitry, enter_with_chrome, warning_first_step, join_btn, here_btn, \
-    close_btn
+    close_btn, here_btn_2, close_btn_2
 
 load_dotenv()
 MTS_LINK = os.getenv("MTS_LINK")
@@ -53,12 +53,23 @@ with uc.Chrome(options=chrome_options) as browser:
 
     while True:
         try:
-            btn_here = WebDriverWait(browser, 60).until(
+            btn_here = WebDriverWait(browser, 10).until(
                 EC.visibility_of_element_located((By.XPATH, here_btn)))
             btn_here.click()
-            btn_close = WebDriverWait(browser, 60).until(
+            btn_close = WebDriverWait(browser, 10).until(
                 EC.visibility_of_element_located((By.XPATH, close_btn)))
             btn_close.click()
+
+        except TimeoutException:
+            pass
+
+        try:
+            btn_here_2 = WebDriverWait(browser, 10).until(
+                EC.visibility_of_element_located((By.XPATH, here_btn_2)))
+            btn_here_2.click()
+            btn_close_2 = WebDriverWait(browser, 10).until(
+                EC.visibility_of_element_located((By.XPATH, close_btn_2)))
+            btn_close_2.click()
 
         except TimeoutException:
             pass
