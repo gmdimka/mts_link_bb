@@ -6,6 +6,7 @@ entry_as_dmitry = "/html/body/div/div/div[2]/div/div/button"
 #default
 enter_with_chrome = "/html/body/div[1]/div/div[2]/div[2]/div/div/p[4]/a"
 mute_mic_btn = "/html/body/div[2]/div/div/div[1]/div/div[1]/div[1]/button"
+mute_cam_btn = "/html/body/div[2]/div/div/div[1]/div/div[1]/div[2]/button"
 join_btn = "/html/body/div[2]/div/div/div[2]/div[4]/button[1]"
 here_btn = "/html/body/div[2]/div/div/div[3]/button"
 here_btn_2 = "/html/body/div[4]/div/div/div[3]/button"

@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support import expected_conditions as EC
 
 from dom_consts import mute_mic_btn, entry_as_dmitry, enter_with_chrome, warning_first_step, join_btn, here_btn, \
-    close_btn, here_btn_2, close_btn_2
+    close_btn, here_btn_2, close_btn_2, mute_cam_btn
 
 load_dotenv()
 MTS_LINK = os.getenv("MTS_LINK")
@@ -47,6 +47,10 @@ with uc.Chrome(options=chrome_options) as browser:
         EC.presence_of_element_located((By.XPATH, mute_mic_btn)))
     if btn_mute.get_attribute("aria-label") == "Выключить микрофон":
         btn_mute.click()
+    btn_cam = WebDriverWait(browser, 15).until(
+        EC.presence_of_element_located((By.XPATH, mute_cam_btn)))
+    if btn_cam.get_attribute("aria-label") == "Выключить камеру":
+        btn_cam.click()
     btn_join = WebDriverWait(browser, 15).until(
         EC.presence_of_element_located((By.XPATH, join_btn)))
     btn_join.click()
