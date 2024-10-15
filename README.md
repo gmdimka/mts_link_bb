@@ -51,3 +51,7 @@ python main.py
 ```
 MTS_LINK=https://example.com/link-to-mark-attendance
 ```
+# Видос
+
+
+![отмечалка гифка 2](https://github.com/user-attachments/assets/97fe556d-1635-433f-82f1-7c2ff76540e1)
