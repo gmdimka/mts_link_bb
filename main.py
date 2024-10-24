@@ -5,13 +5,14 @@ from dotenv import load_dotenv
 
 
 from selenium.common import TimeoutException, WebDriverException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from selenium.webdriver.support import expected_conditions as EC
 
 from dom_consts import mute_mic_btn, entry_as_dmitry, enter_with_chrome, warning_first_step, join_btn, here_btn, \
-    close_btn, here_btn_2, close_btn_2, mute_cam_btn
+    close_btn, here_btn_2, close_btn_2, mute_cam_btn, all_users_btn, num_of_users, rofl_btn, search_btn, leave_btn
 
 load_dotenv()
 MTS_LINK = os.getenv("MTS_LINK")
@@ -55,7 +56,19 @@ with uc.Chrome(options=chrome_options) as browser:
         EC.presence_of_element_located((By.XPATH, join_btn)))
     btn_join.click()
 
-    while True:
+    actions = ActionChains(browser)
+    btn_all_users = WebDriverWait(browser, 10).until(
+        EC.presence_of_element_located((By.XPATH, all_users_btn)))
+    btn_rofl = WebDriverWait(browser, 10).until(
+        EC.visibility_of_element_located((By.XPATH, rofl_btn)))
+
+    actions.move_to_element(btn_rofl).perform()
+    actions.move_to_element(btn_all_users).perform()
+    WebDriverWait(browser, 10).until(
+        EC.visibility_of_element_located((By.XPATH, all_users_btn))).click()
+
+    users = 150
+    while users > 30:
         try:
             btn_here = WebDriverWait(browser, 10).until(
                 EC.visibility_of_element_located((By.XPATH, here_btn)))
@@ -77,3 +90,13 @@ with uc.Chrome(options=chrome_options) as browser:
 
         except TimeoutException:
             pass
+
+        users = int(WebDriverWait(browser, 10).until(
+            EC.visibility_of_element_located((By.XPATH, num_of_users))).text)
+
+    btn_search = WebDriverWait(browser, 10).until(
+        EC.presence_of_element_located((By.XPATH, search_btn)))
+    actions.move_to_element(btn_search).perform()
+    actions.move_to_element(btn_rofl).perform()
+    WebDriverWait(browser, 10).until(
+        EC.visibility_of_element_located((By.XPATH, leave_btn))).click()
